@@ -97,6 +97,12 @@
   document.getElementById("laporanForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    const statusEl = document.getElementById("status");
+    const submitBtn = document.getElementById("kirimBtn");
+    submitBtn.disabled = true;
+    statusEl.textContent = "⏳ Mengirim data...";
+    statusEl.className = "text-warning";
+
     const nama = document.getElementById("nama").value.trim();
     const tanggal = document.getElementById("tanggal").value;
     const assigned = +document.getElementById("assigned").value;
@@ -108,6 +114,8 @@
 
     if ((reschedule > 0 && !fotoReschedule) || (retur > 0 && !fotoReturn)) {
       alert("Jika ada Reschedule atau Return, fotonya wajib diisi.");
+      submitBtn.disabled = false;
+      statusEl.textContent = "";
       return;
     }
 
@@ -133,12 +141,15 @@
         await kirimFotoDenganTimestamp(fotoReturn, `📷 Foto Return - ${nama}`);
       }
 
-      alert("✅ Laporan berhasil dikirim!");
+      statusEl.textContent = "✅ Laporan berhasil dikirim!";
+      statusEl.className = "text-success";
       e.target.reset();
-      document.getElementById("status").textContent = "";
       document.getElementById("kirimBtn").classList.add("d-none");
     } catch (err) {
-      alert("❌ Gagal kirim: " + err.message);
+      statusEl.textContent = "❌ Gagal kirim: " + err.message;
+      statusEl.className = "text-danger";
+    } finally {
+      submitBtn.disabled = false;
     }
   });
 
