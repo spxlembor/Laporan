@@ -134,11 +134,11 @@
       await kirimPesan(laporan);
 
       if (reschedule > 0 && fotoReschedule) {
-        await kirimFotoDenganTimestamp(fotoReschedule, `📷 Foto Reschedule - ${nama}`);
+        await kirimFotoDenganTimestamp(fotoReschedule, `📷  Reschedule - ${nama} -  ${tanggal}`);
       }
 
       if (retur > 0 && fotoReturn) {
-        await kirimFotoDenganTimestamp(fotoReturn, `📷 Foto Return - ${nama}`);
+        await kirimFotoDenganTimestamp(fotoReturn, `📷  Return - ${nama} -  ${tanggal}`);
       }
 
       statusEl.textContent = "✅ Laporan berhasil dikirim!";
